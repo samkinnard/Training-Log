@@ -1018,7 +1018,7 @@ function viewDay(){
     if(showDur&&mode==='40')h+=`<div class="note cy small">40-min day: shorter warm-up and mobility, no finishers, main-lift rest 2–2.5 min, one accessory superset instead of two.</div>`;
     if(showDur&&mode==='30')h+=`<div class="note cy small">30-min day: shortest warm-up, fewer sets on every lift, main-lift rest 90 s–2 min, one accessory movement only, no finisher.</div>`;
     h+=itemsHtml(buildLift(e),e);
-    if(e.type==='LIFT2')h+=`<details><summary>No gym (travel)?</summary>20 min bodyweight circuit: split squats, push-ups, inverted rows or pull-ups, side planks. Or an easy jog.</details>`;
+    if(e.type==='LIFT2')h+=`<details><summary>Travelling?</summary>20 min bodyweight circuit: split squats, push-ups, inverted rows or pull-ups, side planks. Or an easy jog.</details>`;
   }else if(kind==='run'){
     if(showDur&&mode!=='full')h+=`<div class="note cy small">${mode}-min day: ${mode==='40'?'shortened version of the planned run.':'shortest version of the run. Keep the effort, cut the volume.'}</div>`;
     const co=cardioFor(e.type),cur=rb.alt?rb.alt.k:'';
