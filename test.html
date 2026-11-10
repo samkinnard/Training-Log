@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Winter Training Arc · Tests</title>
+<style>
+body{background:#000;color:#fff;font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;margin:0;padding:14px}
+h1{font-size:22px;margin:0 0 4px;color:#ff2e97}
+.sum{font-weight:800;margin:8px 0 12px;font-size:16px}
+.t{border:1px solid #2d2142;border-radius:10px;padding:8px 10px;margin:6px 0;background:#0a0a10}
+.t b{display:inline-block;min-width:44px}
+.pass b{color:#00e5ff}.fail b{color:#ff5a6e}
+.d{color:#a9a2c0;font-size:12.5px;word-break:break-word}
+</style>
+<script>
+/* Throwaway storage key: tests never read or write your real data ('hybrid15.v1'). */
+window.WTA_KEY='hybrid15.test';
+try{Object.keys(localStorage).filter(k=>k.indexOf('hybrid15.test')===0).forEach(k=>localStorage.removeItem(k))}catch(e){}
+</script>
+<script src="plan.js"></script>
+<script src="app.js"></script>
+</head>
+<body>
+<h1>Winter Training Arc · Tests</h1>
+<div class="d">Runs the shared logic (plan.js + app.js) against a built-in sample backup in the OLD v1 format, using the storage key "hybrid15.test".</div>
+<div class="sum" id="sum">Running…</div>
+<div id="out"></div>
+<script>
+"use strict";
+/* Built-in sample backup made in the old format (sets with only w/r/d, one legacy {s,w} entry) */
+const SAMPLE={"v":2,"logs":{"2026-10-28":{"status":"done","rpe":"7","sleep":"7","ex":{"bench":{"sets":[{"w":"135","r":"5","d":true},{"w":"135","r":"5","d":true},{"w":"135","r":"5","d":true},{"w":"135","r":"5","d":true}]},"ohp":{"sets":[{"w":"40","r":"8","d":true},{"w":"40","r":"8","d":true},{"w":"40","r":"8","d":true}]},"incline":{"sets":[{"w":"45","r":"10","d":true},{"w":"45","r":"10","d":true},{"w":"45","r":"10","d":true}]},"lat":{"sets":[{"w":"15","r":"12","d":true},{"w":"15","r":"12","d":true},{"w":"15","r":"12","d":true}]},"tri":{"sets":[{"w":"40","r":"10","d":true},{"w":"40","r":"10","d":true}]},"face":{"sets":[{"w":"30","r":"12","d":true},{"w":"30","r":"12","d":true}]}}},"2026-10-30":{"status":"done","rpe":"7","ex":{"pullups":{"sets":[{"w":"0","r":"5","d":true},{"w":"0","r":"5","d":true},{"w":"0","r":"5","d":true},{"w":"0","r":"5","d":true}]},"row":{"sets":[{"w":"115","r":"8","d":true},{"w":"115","r":"8","d":true},{"w":"115","r":"8","d":true}]},"cable":{"sets":[{"w":"100","r":"10","d":true},{"w":"100","r":"10","d":true},{"w":"100","r":"10","d":true}]},"rdelt":{"sets":[{"w":"15","r":"12","d":true},{"w":"15","r":"12","d":true},{"w":"15","r":"12","d":true}]},"curl":{"sets":[{"w":"25","r":"8","d":true},{"w":"25","r":"8","d":true}]},"knee":{"sets":[{"r":"10","d":true},{"r":"10","d":true}]},"pallof":{"sets":[{"w":"20","r":"10","d":true},{"w":"20","r":"10","d":true}]}}},"2026-10-31":{"status":"done","ex":{"squat":{"sets":[{"w":"165","r":"5","d":true},{"w":"165","r":"5","d":true},{"w":"165","r":"5","d":true}]},"rdl":{"sets":[{"w":"135","r":"8","d":true},{"w":"135","r":"8","d":true}]},"split":{"sets":[{"w":"30","r":"8","d":true},{"w":"30","r":"8","d":true}]}},"vars":{"squat":"back squat"}},"2026-11-02":{"status":"done","rpe":"8","sleep":"6.5","ex":{"squat":{"sets":[{"w":"185","r":"5","d":true},{"w":"185","r":"5","d":true},{"w":"185","r":"5","d":true},{"w":"185","r":"5","d":true}]},"rdl":{"sets":[{"w":"145","r":"8","d":true},{"w":"145","r":"8","d":true},{"w":"145","r":"8","d":true}]},"split":{"sets":[{"w":"35","r":"8","d":true},{"w":"35","r":"8","d":true},{"w":"35","r":"8","d":true}]},"calf":{"sets":[{"w":"100","r":"12","d":true},{"w":"100","r":"12","d":true},{"w":"100","r":"12","d":true}]},"sled":{"sets":[{"w":"90","r":"","d":true},{"w":"90","r":"","d":true},{"w":"90","r":"","d":true},{"w":"90","r":"","d":true},{"w":"90","r":"","d":true},{"w":"90","r":"","d":true}]}}},"2026-11-03":{"status":"done","run":{"dur":"45:00","dist":"4.5","hr":"142","rpe":"4"}},"2026-11-04":{"status":"done","ex":{"bench":{"s":[true,true,true,true],"w":140},"ohp":{"sets":[{"w":"42.5","r":"8","d":true},{"w":"42.5","r":"8","d":true},{"w":"42.5","r":"8","d":true}]},"incline":{"sets":[{"w":"50","r":"10","d":true},{"w":"50","r":"10","d":true},{"w":"50","r":"10","d":true}]},"lat":{"sets":[{"w":"15","r":"15","d":true},{"w":"15","r":"15","d":true},{"w":"15","r":"15","d":true}]},"tri":{"sets":[{"w":"40","r":"15","d":true},{"w":"40","r":"15","d":true}]},"face":{"sets":[{"w":"30","r":"20","d":true},{"w":"30","r":"20","d":true}]}}},"2026-11-05":{"status":"done","run":{"dur":"40:00","dist":"4.4","hr":"158","rpe":"7"}},"2026-11-06":{"status":"done","ex":{"pullups":{"sets":[{"w":"5","r":"5","d":true},{"w":"5","r":"5","d":true},{"w":"5","r":"5","d":true},{"w":"5","r":"4","d":true}]},"row":{"sets":[{"w":"120","r":"8","d":true},{"w":"120","r":"8","d":true},{"w":"120","r":"8","d":true}]},"cable":{"sets":[{"w":"105","r":"10","d":true},{"w":"105","r":"10","d":true},{"w":"105","r":"10","d":true}]},"rdelt":{"sets":[{"w":"15","r":"14","d":true},{"w":"15","r":"14","d":true},{"w":"15","r":"14","d":true}]},"curl":{"sets":[{"w":"25","r":"12","d":true},{"w":"25","r":"12","d":true}]},"pallof":{"sets":[{"w":"20","r":"15","d":true},{"w":"20","r":"15","d":true}]}}},"2026-11-07":{"status":"done","ex":{"l2_squat":{"sets":[{"w":"130","r":"5","d":true},{"w":"130","r":"5","d":true},{"w":"130","r":"5","d":true}]},"l2_bench":{"sets":[{"w":"100","r":"5","d":true},{"w":"100","r":"5","d":true},{"w":"100","r":"5","d":true}]},"l2_pull":{"sets":[{"w":"0","r":"5","d":true},{"w":"0","r":"5","d":true},{"w":"0","r":"5","d":true}]},"l2_ham":{"sets":[{"r":"10","d":true},{"r":"10","d":true}]}}},"2026-11-09":{"status":"done","rpe":"8","alt":{"squat":"goblet"},"ex":{"squat__goblet":{"sets":[{"w":"80","r":"12","d":true,"eqW":"190","eqR":"5","tr":"12"},{"w":"80","r":"12","d":true,"eqW":"190","eqR":"5","tr":"12"},{"w":"80","r":"12","d":true,"eqW":"190","eqR":"5","tr":"12"},{"w":"80","r":"12","d":true,"eqW":"190","eqR":"5","tr":"12"}]},"rdl":{"sets":[{"w":"150","r":"8","d":true},{"w":"150","r":"8","d":true},{"w":"150","r":"8","d":true}]},"split":{"sets":[{"w":"40","r":"8","d":true},{"w":"40","r":"8","d":true},{"w":"40","r":"8","d":true}]},"calf":{"sets":[{"w":"100","r":"13","d":true},{"w":"100","r":"13","d":true},{"w":"100","r":"13","d":true}]},"farmer":{"sets":[{"w":"60","r":"","d":true},{"w":"60","r":"","d":true},{"w":"60","r":"","d":true},{"w":"60","r":"","d":true},{"w":"60","r":"","d":true}]}}}},"baselines":{"race":"10K 54:30"},"body":[{"date":"2026-10-26","bw":182,"waist":34},{"date":"2026-11-09","bw":180,"waist":33.5}],"extra":0,"lastBackup":"2026-11-01","settings":{"units":"mi","autoTimer":true,"wake":false,"altOff":{}}};
+const results=[];
+function fresh(mut){const s=JSON.parse(JSON.stringify(SAMPLE));if(mut)mut(s);state=parseState(s);rebuildPlan();return state}
+function item(key,id){const e=entry(key);const it=buildLift(Object.assign({},e,{log:Object.assign({},e.log,{alt:{}})})).find(x=>x.id===id);return {e,it}}
+function sug(key,id){const {e,it}=item(key,id);return suggest(it,e)}
+function check(name,fn){
+  try{const r=fn();results.push({name,ok:r.ok,detail:r.detail})}
+  catch(err){results.push({name,ok:false,detail:'Error: '+(err&&err.message||err)})}
+}
+const eq=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const sets=s=>s?s.sets.map(x=>[x.w,x.r,x.cap]):null;
+
+check('Old-format sample loads (normalize + migration)',()=>{fresh();const n=Object.keys(state.logs).length,b=state.logs['2026-11-04'].ex.bench.sets;
+  return {ok:n===10&&state.v===3&&b.length===4&&b[0].w===140&&b[0].d===true&&!!state.settings.equip,detail:`${n} logs, v${state.v}, legacy bench converted to ${b.length} sets of ${b[0].w}`}});
+check('Week-3 squat target and ceiling',()=>{fresh();const s=sug('2026-11-09','squat'),t=s.sets[0];
+  return {ok:t.w===190&&t.r===5&&t.cap===200,detail:`Week 2 = 185×5 all clean → ${t.w}×${t.r}, Do Not Exceed ${t.cap} (expected 190×5, 200)`}});
+check('Target line keeps the exact format',()=>{fresh();const {e,it}=item('2026-11-09','squat'),s=suggest(it,e),t=tgtText(it,s.sets[0],e);
+  return {ok:t==='Target = 190 lbs for 5 reps. Do Not Exceed 200 lbs.',detail:t}});
+check('Isolation lift: reps first (calf raise)',()=>{fresh();const t=sug('2026-11-09','calf').sets[0];
+  return {ok:t.w===100&&t.r===13&&t.cap===100,detail:`Week 2 = 100×12 (range 10–15) → ${t.w}×${t.r}, ceiling ${t.cap} (expected same weight, +1 rep)`}});
+check('Isolation lift: top of range → weight up, reps reset (triceps pushdown)',()=>{fresh();const t=sug('2026-11-11','tri').sets[0];
+  return {ok:t.w===45&&t.r===10&&t.cap===45,detail:`Week 2 = 40×15 (top of 10–15) → ${t.w}×${t.r} (expected 45×10 with the default 5 lb stack step)`}});
+check('Goblet squat alternate converts at the 80 lb max',()=>{fresh();const {e,it}=item('2026-11-09','squat');const a=altItem(it,ALTS.squat.find(x=>x.k==='goblet')),s=altSuggest(a,e),t=s.sets[0];
+  return {ok:t.w===80&&t.r===12&&t.cap===80&&/heaviest dumbbell/.test(s.why),detail:`Main target 190×5 @RPE 8 → goblet ${t.w}×${t.r} (expected 80×12, reps rise at the max)`}});
+check('Main lift progresses after an alternate week',()=>{fresh();const t=sug('2026-11-16','squat').sets[0];
+  return {ok:t.w===195&&t.cap===205,detail:`Week 3 done as goblet 80×12 (stands in for 190×5) → Week 4 squat ${t.w}, ceiling ${t.cap} (expected 195, 205)`}});
+check('Old-format log (legacy {s,w} bench) still produces targets',()=>{fresh();const t=sug('2026-11-11','bench').sets[0];
+  return {ok:t.w===145&&t.r===5&&t.cap===150,detail:`Week 2 legacy bench 140 → Week 3 ${t.w}×${t.r}, ceiling ${t.cap} (expected 145×5, 150)`}});
+check('RPE high (≥ T + 1) holds the weight and explains why',()=>{fresh(s=>s.logs['2026-11-02'].ex.squat.sets.forEach(x=>x.rpe='9.5'));const s=sug('2026-11-09','squat');
+  return {ok:s.sets[0].w===185&&s.sets[0].cap===185&&/clean but RPE 9.5, holding/.test(s.why),detail:s.why+` → ${s.sets[0].w}`}});
+check('RPE easy (≤ T − 1.5) takes a bigger step but stays under the ceiling',()=>{fresh(s=>s.logs['2026-11-02'].ex.squat.sets.forEach(x=>x.rpe='6'));const t=sug('2026-11-09','squat').sets[0];
+  return {ok:t.w===195&&t.cap===200&&t.w<=t.cap,detail:`RPE 6 vs planned 8 → ${t.w} (ceiling ${t.cap})`}});
+check('Isolation high RPE holds reps instead of adding one',()=>{fresh(s=>s.logs['2026-11-02'].ex.calf.sets.forEach(x=>x.rpe='10'));const t=sug('2026-11-09','calf').sets[0];
+  return {ok:t.w===100&&t.r===12,detail:`Calf 100×12 at RPE 10 → ${t.w}×${t.r} (expected 100×12)`}});
+check('Plate calculator',()=>{fresh();const a=plateText(225,45),b=plateText(185,45),c=plateText(45,45);
+  state.settings.equip.plates=[45,25,10,5];_pl.sig=null;const d=floorLoadable(137.5,45),f=fitDown({eq:'bb'},142);
+  return {ok:a==='45 + 45 per side'&&b==='45 + 25 per side'&&c==='Bar only'&&d===135&&f===135,detail:`225: ${a} · 185: ${b} · 45: ${c} · no 2.5s: 137.5→${d}, 142→${f}`}});
+check('Barbell target rounds down to a loadable weight (no 2.5 lb plates)',()=>{fresh(s=>s.settings.equip={plates:[45,35,25,10,5]});const t=sug('2026-11-09','squat').sets[0];
+  return {ok:t.w===195&&t.cap===195&&sidePlates(t.w,45)!=null,detail:`Smallest jump is 10 lb → ${t.w}, ceiling ${t.cap} (200 is not loadable)`}});
+check('Dumbbell alternates use the profile max',()=>{fresh(s=>s.settings.equip={dbMax:50});const {e,it}=item('2026-11-11','bench');const a=altItem(it,ALTS.bench[0]),t=altSuggest(a,e).sets[0];
+  return {ok:t.w===50&&t.r>5,detail:`Heaviest DB 50 → DB bench ${t.w}×${t.r}`}});
+check('Learned ratio after 2 sessions (50/50 blend, Personalized)',()=>{fresh(s=>{
+    s.logs['2026-11-09'].ex.squat__goblet.sets.forEach(x=>{x.rpe='8';x.r='14'});
+    s.logs['2026-11-16']={alt:{squat:'goblet'},ex:{squat__goblet:{sets:[{w:'80',r:'15',d:true,eqW:'195',eqR:'5',tr:'12',rpe:'7'}]}}};});
+  const r=learnRatio('goblet'),e=entry('2026-11-23');const it=buildLift(e).find(x=>x.id==='squat');const s=altSuggest(altItem(it,ALTS.squat[1]),e);
+  return {ok:r&&r.n===2&&r.ratio>0.5&&r.ratio<r.personal&&r.ratio<=0.75&&s.personal,detail:`n=${r&&r.n}, personal ×${r&&r.personal}, blended ×${r&&r.ratio}`}});
+check('Repeat week: inserted after Week 3, holds loads, later weeks shift',()=>{fresh();const r=insertAfter(2,'repeat');const w=CAL[3],s=suggest(buildLift(entry(keyAt(3,0))).find(x=>x.id==='squat'),entry(keyAt(3,0)));
+  const w4=CAL[4],t4=suggest(buildLift(entry(keyAt(4,0))).find(x=>x.id==='squat'),entry(keyAt(4,0))).sets[0];
+  const ok=r.ok&&w.label==='Week 3 (Repeat)'&&w4.n===4&&s.sets[0].w===190&&t4.w===195&&!!state.logs['2026-11-09'];
+  const u=undoInsert();return {ok:ok&&u.ok&&CAL[3].n===4,detail:`${w.label}: squat ${s.sets[0].w} (hold); Week 4 moved to ${fmtShort(dateAt(4,0))}: ${t4.w}; undo ok`}});
+check('Pause week: shifts the plan and keeps progression references',()=>{fresh();insertAfter(2,'pause');const w=CAL[3],e=entry(keyAt(4,0)),t=suggest(buildLift(e).find(x=>x.id==='squat'),e).sets[0];
+  return {ok:w.pause&&CAL[4].n===4&&t.w===195&&WEEKS===16,detail:`${w.label} then Week ${CAL[4].n} (${fmtShort(dateAt(4,0))}) squat ${t.w}`}});
+check('Insert is blocked when later days are already logged',()=>{fresh();const r=insertAfter(1,'pause');return {ok:!!r.err&&WEEKS===15,detail:r.err||'not blocked'}});
+check('Early deload override: 90% loads, no Lift 2, next week resumes',()=>{fresh(s=>s.deloadOverride={'4':true});const e=entry('2026-11-16'),t=suggest(buildLift(e).find(x=>x.id==='squat'),e).sets[0];
+  const sat=entry('2026-11-21').type,e6=entry(keyAt(5,0));
+  return {ok:CAL[3].deload&&t.w===170&&sat==='OFF'&&buildLift(e).filter(x=>x.main)[0].sets===3,detail:`Week 4 squat ${t.w} (90% of 190), Saturday ${sat}`}});
+check('Fatigue check: missed main-lift reps twice',()=>{fresh(s=>{s.logs['2026-11-04'].ex.bench={sets:[{w:'140',r:'3',d:true}]};s.logs['2026-11-06'].ex.pullups.sets[0].r='3'});const f=fatigueCheck('2026-11-08');
+  return {ok:!!f&&/missed reps/.test(f.reasons[0]),detail:f?f.reasons.join('; '):'no suggestion'}});
+check('HR zones: Tanaka estimate and HRR',()=>{fresh(s=>s.settings.age='40');const a=hrInfo();state.settings.restHR='60';const b=hrInfo();
+  return {ok:a.max===180&&a.est&&eq(a.z2,[108,126])&&b.method==='hrr'&&eq(b.z2,[132,144]),detail:`age 40 → max ${a.max} (est), Z2 ${a.z2.join('–')}; with rest 60 → ${b.z2.join('–')}`}});
+check('10K prediction (Riegel) from baseline text',()=>{fresh(s=>s.baselines.race='5K 25:00');const p=predict10k();
+  return {ok:Math.abs(p.pred-52.12)<0.05,detail:`5K 25:00 → ${fmtDur(p.pred)} (expected ≈52:07)`}});
+check('Backup validation rejects bad files',()=>{const a=validateBackup({}),b=validateBackup({logs:{'2026-13-40':{}}}),c=validateBackup(SAMPLE);
+  return {ok:!a.ok&&!b.ok&&c.ok&&c.n===10&&c.first==='2026-10-28',detail:`no logs: ${a.err} · bad date: ${b.err} · sample: ${c.n} days ${c.first}→${c.last}`}});
+check('PR detection',()=>{fresh();const p=computePRs();return {ok:p.list.some(x=>x.id==='squat'&&x.key==='2026-11-02'),detail:p.list.slice(0,4).map(x=>x.key+' '+x.id).join(', ')}});
+check('Throwaway storage key is used',()=>({ok:KEY==='hybrid15.test',detail:'KEY = '+KEY}));
+
+function show(){
+  const pass=results.filter(r=>r.ok).length;
+  document.getElementById('sum').textContent=`${pass} / ${results.length} passed`;
+  document.getElementById('sum').style.color=pass===results.length?'#00e5ff':'#ff5a6e';
+  document.getElementById('out').innerHTML=results.map(r=>`<div class="t ${r.ok?'pass':'fail'}"><b>${r.ok?'PASS':'FAIL'}</b> ${esc(r.name)}<div class="d">${esc(r.detail||'')}</div></div>`).join('');
+  window.TEST_RESULTS=results;
+}
+/* Version check needs http(s) (GitHub Pages or a local server) */
+if(/^https?:$/.test(location.protocol)){
+  fetch('sw.js',{cache:'no-store'}).then(r=>r.text()).then(t=>{const m=t.match(/CACHE_VERSION\s*=\s*'wta-v([^']+)'/);
+    results.push({name:'sw.js CACHE_VERSION matches APP_VERSION',ok:!!m&&m[1]===APP_VERSION,detail:`sw.js ${m?m[1]:'?'} · app.js ${APP_VERSION}`})}).catch(e=>results.push({name:'sw.js CACHE_VERSION matches APP_VERSION',ok:false,detail:String(e)})).then(show);
+}else{results.push({name:'sw.js CACHE_VERSION matches APP_VERSION',ok:true,detail:'Skipped (open test.html over http to check)'});show()}
+try{localStorage.removeItem('hybrid15.test')}catch(e){}
+</script>
+</body>
+</html>
